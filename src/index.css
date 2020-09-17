@@ -9,13 +9,13 @@ body {
   padding-bottom: 65px;
 }
 
-::-webkit-scrollbar {
+/* ::-webkit-scrollbar {
   display: none;
 }
 
 scrollbar {
   display: none;
-}
+} */
 
 button:hover {
   outline: 0;
