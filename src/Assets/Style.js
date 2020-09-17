@@ -45,5 +45,46 @@ export const FadeInKeyframes = keyframes`
 `;
 
 export const fadeInAnim = css`
-  animation: ${FadeInKeyframes} ease-out 0.3s forwards;
+  animation: ${FadeInKeyframes} ease-out 0.5s forwards;
+`;
+
+export const ClickAnimKeyframes = keyframes`
+  from {
+    transform: scale(1);
+    ${zdepth1}
+  }
+
+  to {
+    transform: scale(1.1);
+    ${zdepth2}
+  }
+`;
+
+export const ClickAnim = css`
+  animation: ${ClickAnimKeyframes} 0.3s ease-out;
+`;
+
+export const SmallButton = styled.button`
+  background-color: #e5e5e5;
+  padding: 10px 15px;
+  border-radius: 20px;
+  border: 0;
+  margin: 10px;
+  user-select: none;
+  ${zdepth1}
+  transition: all 0.2s ease-out;
+
+  ${(props) => (props.selected
+    ? css`
+          outline: 0;
+          background-color: #8504a6;
+          color: white;
+          ${zdepth2}
+          transform: scale(1.05);
+        `
+    : null)}
+
+  &:focus {
+    outline: 0;
+  }
 `;

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Redirect, Link } from 'react-router-dom';
+import { Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import Header from '../../components/Header/Header';
@@ -10,8 +10,8 @@ import Card from '../../components/Card';
 import RecipesShowcase from '../../components/RecipesShowcase';
 
 /** Styled Component */
-import { Recipes } from './StyledComponets';
-import { SectionTitle } from '../../Assets/Style';
+import { Recipes, SectionHeader, CategoriesButton, Categories, MealsContainer } from './StyledComponets';
+import { SectionTitle, SmallButton } from '../../Assets/Style';
 
 const handleCategory = (categoryName, getData, setSelectedCategory, selectedCategory) => {
   // console.log(categoryName, getData);
@@ -26,49 +26,64 @@ const handleCategory = (categoryName, getData, setSelectedCategory, selectedCate
   return false;
 };
 
+const mealsRecipe = (data) =>
+  data.slice(0, 12).map((recipe, index) => <Card type="meal" data={recipe} index={index} />);
+
+const mealsCategories = (categories, getData, setSelectedCategory, selectedCategory) => (
+  <div>
+    <SmallButton
+      type="button"
+      data-testid="All-category-filter"
+      selected={selectedCategory === 'All'}
+      onClick={() => handleCategory('All', getData, setSelectedCategory, selectedCategory)}
+    >
+      All
+    </SmallButton>
+    {categories.slice(0, 5).map(({ strCategory: categoryName }) => (
+      <SmallButton
+        type="button"
+        key={`${categoryName} melas`}
+        data-testid={`${categoryName}-category-filter`}
+        selected={selectedCategory === categoryName}
+        onClick={() => handleCategory(categoryName, getData, setSelectedCategory, selectedCategory)}
+      >
+        {categoryName}
+      </SmallButton>
+    ))}
+  </div>
+);
+
 const Meals = ({ getData, data, getCategories, categories }) => {
-  const [selectedCategory, setSelectedCategory] = useState('');
+  const [selectedCategory, setSelectedCategory] = useState('All');
+  const [categoriesState, setCategoriesState] = useState(false);
+
   useEffect(() => {
     if (!data.length) getMealsByName('').then((recipes) => getData(recipes.meals));
   }, [getData]);
+
   useEffect(() => {
     getMealsCategories().then((recipesCategories) => getCategories(recipesCategories.meals));
   }, [getCategories]);
 
-  const mealsRecipe = data
-    .slice(0, 12)
-    .map((recipe, index) => <Card type="meal" data={recipe} index={index} />);
-
-  const mealsCategories = categories.slice(0, 5).map(({ strCategory: categoryName }) => (
-    <button
-      type="button"
-      key={`${categoryName} melas`}
-      data-testid={`${categoryName}-category-filter`}
-      onClick={() => handleCategory(categoryName, getData, setSelectedCategory, selectedCategory)}
-    >
-      {categoryName}
-    </button>
-  ));
   return data.length === 1 && selectedCategory !== 'Goat' && selectedCategory !== 'All' ? (
     <Redirect to={`/comidas/${data[0].idMeal}`} />
   ) : (
-    <div>
+    <MealsContainer>
       <Header />
-      <div>
-        <button
-          type="button"
-          data-testid="All-category-filter"
-          onClick={() => handleCategory('All', getData, setSelectedCategory, selectedCategory)}
-        >
-          All
-        </button>
-        {mealsCategories}
-      </div>
+      <SectionTitle>Destaques</SectionTitle>
       <RecipesShowcase type="meal" data={data} />
-      <SectionTitle>Receitas</SectionTitle>
-      <Recipes>{mealsRecipe}</Recipes>
+      <SectionHeader>
+        <SectionTitle>Receitas</SectionTitle>
+        <CategoriesButton onClick={() => setCategoriesState(!categoriesState)}>
+          Categorias
+        </CategoriesButton>
+      </SectionHeader>
+      <Categories visible={categoriesState}>
+        {mealsCategories(categories, getData, setSelectedCategory, selectedCategory)}
+      </Categories>
+      <Recipes>{mealsRecipe(data)}</Recipes>
       <BottomMenu />
-    </div>
+    </MealsContainer>
   );
 };
 

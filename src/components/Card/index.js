@@ -10,14 +10,12 @@ const inf = {
     id: 'idMeal',
     image: 'strMealThumb',
     desc: 'strMeal',
-    testId: '-recipe-card',
     path: '/comidas',
   },
   drink: {
     id: 'idDrink',
     image: 'strDrinkThumb',
     desc: 'strDrink',
-    testId: '-recipe-card',
     path: '/bebidas',
   },
 };
@@ -28,15 +26,15 @@ const Card = ({ type, data, index }) => {
   return (
     <CardContainer
       key={data[inf[type].id]}
-      data-testid={`${index}${inf[type].testId}`}
+      data-testid={`${index}-recipe-card`}
       onClick={() => {
         setTimeout(() => {
           push(`${inf[type].path}/${data[inf[type].id]}`);
         }, 300);
       }}
     >
-      <CardImage src={data[inf[type].image]} />
-      <CardTitle>{data[inf[type].desc]}</CardTitle>
+      <CardImage src={data[inf[type].image]} data-testid={`${index}-card-img`} />
+      <CardTitle data-testid={`${index}-card-name`}>{data[inf[type].desc]}</CardTitle>
     </CardContainer>
   );
 };

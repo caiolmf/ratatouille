@@ -55,4 +55,7 @@ export const CardImage = styled.img`
 export const CardTitle = styled.span`
   font-size: 1.2em;
   font-weight: 800;
+  height: 100%;
+  display: flex;
+  align-items: center;
 `;

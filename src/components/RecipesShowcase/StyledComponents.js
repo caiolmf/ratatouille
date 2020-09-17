@@ -37,4 +37,5 @@ export const RecipeCaseTitle = styled.span`
   font-weight: 800;
   font-size: 2em;
   align-self: flex-end;
+  text-align: start;
 `;

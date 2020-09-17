@@ -2,14 +2,30 @@ import PropTypes from 'prop-types';
 import React, { useState, useEffect } from 'react';
 import copyToClipboard from 'clipboard-copy';
 import { connect } from 'react-redux';
+import Lottie from 'react-lottie';
 import ShareIcon from '../../images/shareIcon.svg';
 import FavoriteIcon from '../../images/blackHeartIcon.svg';
 import NotFavoriteIcon from '../../images/whiteHeartIcon.svg';
 
+/** Styled Components */
+import { Social, SocialBtn, SocialBtnIcon } from './StyledComponets';
+ 
 /**
- * Styled components
- import { Social, SocialIcon } from './StyledComponents';
+ * Lottie Options
+ * Favorite Anim - LottieFiles - User: Gaetan Gonzalez
+ * Share Anim - LottieFiles - User: Gaetan Gonzalez
  */
+import likeAnim from '../../Assets/Animations/heart-anim.json'
+
+const likeAnimOptions = {
+  loop: false,
+  autoplay: false,
+  animationData: likeAnim,
+  rendererSettings: {
+    preserveAspectRatio: 'xMidYMid slice',
+  },
+};
+
 
 const setLocalStorageFood = (recipe, currentFavoriteRecipes) => {
   const objForFavorite = {
@@ -54,6 +70,7 @@ const checkWindowHef = () => {
 
 const SocialMenu = ({ recipe }) => {
   const [favorite, setFavorite] = useState(false);
+  const [likeAnimState, setlikeAnimState] = useState(true);
 
   const currentFavoriteRecipes = localStorage.getItem('favoriteRecipes')
     ? JSON.parse(localStorage.getItem('favoriteRecipes')) : [];
@@ -80,27 +97,27 @@ const SocialMenu = ({ recipe }) => {
     } else {
       setLocalStorageDrink(recipe, currentFavoriteRecipes);
     }
+    setlikeAnimState(!likeAnimState);
     setFavorite(!favorite);
   };
 
   return (
-    <div>
-      <input
-        type="image"
+    <Social>
+      <SocialBtn
+        type="button"
         data-testid="share-btn"
-        src={ShareIcon}
-        alt="share botton"
         onClick={() => handleShare()}
-      />
-      <input
-        type="image"
+      >
+        <SocialBtnIcon src={ShareIcon} alt="Share button"/>
+      </SocialBtn>
+      <SocialBtn
         data-testid="favorite-btn"
-        src={!favorite ? NotFavoriteIcon : FavoriteIcon}
-        alt="favorite bottom"
         onClick={() => handleFavorite()}
-      />
+      >
+        <Lottie options={likeAnimOptions} isStopped={likeAnimState} />
+      </SocialBtn>
       <div id="copyLink" />
-    </div>
+    </Social>
   );
 };
 

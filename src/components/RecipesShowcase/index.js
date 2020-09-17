@@ -2,7 +2,6 @@ import React from 'react';
 import { useHistory } from 'react-router-dom';
 
 /** Styled components */
-import { SectionTitle } from '../../Assets/Style';
 import { Showcase, RecipeCase, RecipeCaseTitle } from './StyledComponents';
 
 const inf = {
@@ -25,7 +24,6 @@ const RecipesShowcase = ({ type, data }) => {
 
   return (
     <div>
-      <SectionTitle>Destaques</SectionTitle>
       <Showcase>
         {data.slice(-5).map((recipe) => (
           <RecipeCase

@@ -13,8 +13,9 @@ export const RECOMMENDATIONS_FETCH_ERROR = 'RECOMMENDATIONS_FETCH_ERROR';
  * Recipe fetch actions
  */
 
-const recipeFetch = () => ({
+const recipeFetch = (bool) => ({
   type: RECIPE_FETCH,
+  bool,
 });
 
 const recipeFetchSuccess = (recipe) => ({
