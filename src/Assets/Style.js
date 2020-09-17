@@ -26,6 +26,11 @@ export const zdepth5 = css`
     0 9px 46px 8px rgba(0 , 0 , 0 , 0.12), 0 11px 15px -7px rgba(0 , 0 , 0 , 0.2);
 `;
 
+export const DesktopContainer = styled.div`
+  max-width: 400px;
+  position: relative;
+`;
+
 export const SectionTitle = styled.h2`
   padding: 10px 20px;
   margin: 0;
