@@ -181,3 +181,24 @@ export const getMealsByArea = async (area) => {
   const data = await (response.ok ? Promise.resolve(json) : Promise.reject(json));
   return data;
 };
+
+/** Get nutrition facts */
+export const getNutritionFacts = async (query) => {
+  const fetchUrl = 'https://trackapi.nutritionix.com/v2/natural/nutrients';
+  const response = await fetch(fetchUrl, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      'x-app-id': '8e468570',
+      'x-app-key': 'fecf899918b2e3ab856470e477d29e8f',
+    },
+    body: JSON.stringify({
+      query,
+      timezone: "US/Eastern"
+     })
+  });
+  const json = await response.json();
+  const data = await (response.ok ? Promise.resolve(json) : Promise.reject(json)); 
+
+  return data;
+};

@@ -5,6 +5,7 @@ import { fetchRecipe, fetchRecommendations } from '../../actions/detailsActions'
 import { loadFromLocalStorage } from '../../service/localStorage';
 import SocialMenu from '../../components/SocialMenu';
 import RecipesRecommendations from '../../components/RecipesRecommendations';
+import Loading from '../../components/Loading';
 
 /**
  * Styled components
@@ -16,8 +17,14 @@ import {
   RecipeTitle,
   RecipeVideo,
   RecipeStartButtom,
+  RecipeInredients,
+  Ingredient,
+  Measure,
 } from './StyledComponents';
 import { setAppLocation } from '../../actions/appActions';
+import { useState } from 'react';
+import NutritionFacts from '../../components/NutritionFacts';
+import { NutritionFact } from '../../components/NutritionFacts/StyledComponents';
 
 /**
  * Gambiarra necessária para passar nos testes =(
@@ -31,6 +38,16 @@ const checkAppLocation = (path, appLocation, locationChanger) => {
 
   appLocation === 'comidas' ? locationChanger('bebidas') : locationChanger('comidas');
   return false;
+};
+
+const handleRecipeHeader = (recipeHeaderState, setrecipeHeaderState) => {
+  const startPos = (window.innerHeight * 30) / 100 + 60;
+
+  if (window.pageYOffset >= startPos && recipeHeaderState === 'int') {
+    setrecipeHeaderState('menu');
+  } else if (window.pageYOffset < startPos) {
+    setrecipeHeaderState('int');
+  }
 };
 
 /**
@@ -77,16 +94,21 @@ const renderRecipeButton = (id, appLocation, startRecipe) => {
  *
  * @param {array} ingredients Array with ingredients - from redux datailsReducer.ingredients
  */
-const renderIngredientsList = (ingredients) => (
+const renderIngredientsList = (ingredients, setingredientFactState) => (
   <section>
     <h2>Ingredients</h2>
-    <ul>
-      {ingredients.map((data, index) => (
-        <li key={data.ingredient} data-testid={`${index}-ingredient-name-and-measure`}>
-          {`${data.ingredient} - ${data.measure}`}
-        </li>
-      ))}
-    </ul>
+    {ingredients.map((data, index) => (
+      <RecipeInredients>
+        <Ingredient
+          key={data.ingredient}
+          data-testid={`${index}-ingredient-name-and-measure`}
+          onClick={() => setingredientFactState(`${data.measure} ${data.ingredient}`)}
+        >
+          {data.ingredient}
+        </Ingredient>
+        <Measure>{data.measure}</Measure>
+      </RecipeInredients>
+    ))}
   </section>
 );
 
@@ -110,16 +132,40 @@ const renderVideo = (strYoutube) => (
 
 const RecipeDetails = (props) => {
   const {
-    match, history, recipeFetching, recipeFetch, recipe, recommendationsFetch,
-    appLocation, locationChanger,
+    match,
+    history,
+    recipeFetching,
+    recipeFetch,
+    recipe,
+    recommendationsFetch,
+    appLocation,
+    locationChanger,
   } = props;
-  const { id } = match.params; // Recipe ID
   const {
-    strMealThumb, strDrinkThumb, strMeal, strDrink, strCategory, strAlcoholic,
+    strMealThumb,
+    strDrinkThumb,
+    strMeal,
+    strDrink,
+    strCategory,
+    strAlcoholic,
     strInstructions,
     strYoutube,
     ingredients,
   } = recipe;
+  const { id } = match.params; // Recipe ID
+  const [recipeHeaderState, setrecipeHeaderState] = useState('int');
+  const [ingredientFactState, setingredientFactState] = useState('none');
+
+  useEffect(() => {
+    window.addEventListener('scroll', () =>
+      handleRecipeHeader(recipeHeaderState, setrecipeHeaderState)
+    );
+    return () => {
+      window.removeEventListener('scroll', () =>
+        handleRecipeHeader(recipeHeaderState, setrecipeHeaderState)
+      );
+    };
+  }, []);
 
   /**
    * Fetch recipe and recommendations on appLocation change
@@ -138,31 +184,35 @@ const RecipeDetails = (props) => {
     history.push(`/${appLocation}/${id}/in-progress`);
   };
 
-  if (recipeFetching) return <p>loading...</p>;
+  if (recipeFetching) return <Loading />;
 
   return (
-    <Recipe>
+    <div>
       <RecipeImage
         data-testid="recipe-photo"
         src={appLocation === 'comidas' ? strMealThumb : strDrinkThumb}
       />
-      <SocialMenu />
-      <RecipeHeader>
-        <RecipeTitle data-testid="recipe-title">
-          {appLocation === 'comidas' ? strMeal : strDrink}
-        </RecipeTitle>
-        {/* <SocialMenu /> */}
-      </RecipeHeader>
-      <span data-testid="recipe-category">
-        {appLocation === 'comidas' ? strCategory : strAlcoholic}
-      </span>
-      {renderIngredientsList(ingredients)}
-      <h2>Instruction</h2>
-      <p data-testid="instructions">{strInstructions}</p>
-      {strYoutube && renderVideo(strYoutube)}
-      <RecipesRecommendations />
-      {renderRecipeButton(id, appLocation, startRecipe)}
-    </Recipe>
+      <Recipe type={recipeHeaderState}>
+        <RecipeHeader type={recipeHeaderState}>
+          <RecipeTitle data-testid="recipe-title">
+            {appLocation === 'comidas' ? strMeal : strDrink}
+          </RecipeTitle>
+          <SocialMenu />
+        </RecipeHeader>
+        <span data-testid="recipe-category">
+          {appLocation === 'comidas' ? strCategory : strAlcoholic}
+        </span>
+        {renderIngredientsList(ingredients, setingredientFactState)}
+        <h2>Instruction</h2>
+        <p data-testid="instructions">{strInstructions}</p>
+        {strYoutube && renderVideo(strYoutube)}
+        <RecipesRecommendations />
+        {renderRecipeButton(id, appLocation, startRecipe)}
+      </Recipe>
+      {ingredientFactState != 'none' ? (
+        <NutritionFacts query={ingredientFactState} stateChanger={setingredientFactState} />
+      ) : null}
+    </div>
   );
 };
 
