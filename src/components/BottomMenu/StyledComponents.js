@@ -4,6 +4,7 @@
  * This contains all the styled compoents for the BottomMenu component.
  */
 import styled from 'styled-components';
+import { maxMobileSize } from '../../Assets/Style';
 
 export const Menu = styled.div`
   align-items: center;
@@ -17,6 +18,7 @@ export const Menu = styled.div`
   padding-bottom: 8px;
   padding-top: 8px;
   position: fixed;
+  max-width: ${maxMobileSize};
   width: 100%;
   z-index: 999;
   font-size: 1.3em;

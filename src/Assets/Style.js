@@ -1,4 +1,7 @@
+import { max } from 'lodash';
 import styled, { css, keyframes } from 'styled-components';
+
+export const maxMobileSize = '415px';
 
 /** Drop Shadows */
 export const zdepth1 = css`
@@ -27,8 +30,10 @@ export const zdepth5 = css`
 `;
 
 export const DesktopContainer = styled.div`
-  max-width: 400px;
+  max-width: ${maxMobileSize};
   position: relative;
+  padding-top: 70px;
+  padding-bottom: 65px;
 `;
 
 export const SectionTitle = styled.h2`

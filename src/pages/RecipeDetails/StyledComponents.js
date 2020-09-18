@@ -1,5 +1,7 @@
 import styled, { css, keyframes } from 'styled-components';
-import { SmallButton, ClickAnim, zdepth1, zdepth2, fadeInAnim } from '../../Assets/Style';
+import {
+  SmallButton, ClickAnim, zdepth1, zdepth2, fadeInAnim, maxMobileSize,
+} from '../../Assets/Style';
 
 export const Recipe = styled.div`
   align-items: cneter;
@@ -23,12 +25,20 @@ export const recipeImgAmim = keyframes`
   }
 `;
 
-export const RecipeImage = styled.img`
+export const RecipeImageContainer = styled.div`
   width: 100%;
   position: fixed;
   top: 0;
   left: 0;
+  max-width: ${maxMobileSize};
   z-index: -1;
+  overflow: hidden;
+`;
+
+export const RecipeImage = styled.img`
+  width: 100%;
+  max-width: ${maxMobileSize};
+  z-index: -2;
   animation: ${recipeImgAmim} 2s ease-out forwards;
 `;
 
@@ -40,17 +50,17 @@ export const RecipeHeader = styled.div`
   width: 100%;
   transition: background-color ease-out 0.5s;
 
-  ${({ type }) =>
-    type === 'menu'
-      ? css`
+  ${({ type }) => (type === 'menu'
+    ? css`
           position: fixed;
           top: 0;
           left: 0;
           width: 100%;
+          max-width: ${maxMobileSize};
           background-color: white;
           padding: 0 20px;
         `
-      : null}
+    : null)}
 `;
 
 export const RecipeTitle = styled.h1`
@@ -74,7 +84,7 @@ export const RecipeStartButtom = styled(SmallButton)`
   bottom: 3vh;
   position: fixed;
   margin: 0;
-  margin-left: calc(50% - 17vh);
+  margin-left: 8vh;
   background-color: #7b1fa2;
   color: white;
   font-weight: 800;
@@ -95,7 +105,7 @@ export const RecipeInredients = styled.div`
 
 export const Ingredient = styled.div`
   width: 65vw;
-  background-color: #f0ecec;
+  background-color: #dedede; // Old Color #f0ecec
   padding: 8px 35px;
   border-radius: 20px;
   font-size: 1.1em;
@@ -105,7 +115,7 @@ export const Ingredient = styled.div`
 
 export const Measure = styled.div`
   width: 25vw;
-  background-color: #f0ecec;
+  background-color: #dedede; // Old Color #f0ecec
   padding: 8px 20px;
   border-radius: 20px;
   font-size: 1.1em;
