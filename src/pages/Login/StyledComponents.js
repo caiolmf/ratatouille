@@ -13,7 +13,7 @@ export const LoginPage = styled.div`
 `;
 
 export const VideoBG = styled.video`
-  position: fixed;
+  position: absolute;
   top: 0;
   left: 0;
   z-index: -2;

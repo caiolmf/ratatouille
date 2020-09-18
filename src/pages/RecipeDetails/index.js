@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { fetchRecipe, fetchRecommendations } from '../../actions/detailsActions';
@@ -20,11 +20,10 @@ import {
   RecipeInredients,
   Ingredient,
   Measure,
+  RecipeImageContainer,
 } from './StyledComponents';
 import { setAppLocation } from '../../actions/appActions';
-import { useState } from 'react';
 import NutritionFacts from '../../components/NutritionFacts';
-import { NutritionFact } from '../../components/NutritionFacts/StyledComponents';
 
 /**
  * Gambiarra necessária para passar nos testes =(
@@ -188,10 +187,12 @@ const RecipeDetails = (props) => {
 
   return (
     <div>
-      <RecipeImage
-        data-testid="recipe-photo"
-        src={appLocation === 'comidas' ? strMealThumb : strDrinkThumb}
-      />
+      <RecipeImageContainer>
+        <RecipeImage
+          data-testid="recipe-photo"
+          src={appLocation === 'comidas' ? strMealThumb : strDrinkThumb}
+        />
+      </RecipeImageContainer>
       <Recipe type={recipeHeaderState}>
         <RecipeHeader type={recipeHeaderState}>
           <RecipeTitle data-testid="recipe-title">

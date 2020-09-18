@@ -37,7 +37,8 @@ export const Nutrition = styled.div`
 
 export const NutritionFact = styled.div`
   width: 80vw;
-  height: 62vh;
+  max-width: 380px;
+  // height: 62vh;
   background-color: white;
   border-radius: 15px;
   z-index: 99999;
