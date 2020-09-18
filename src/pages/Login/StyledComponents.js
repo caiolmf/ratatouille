@@ -1,5 +1,4 @@
 import styled, { css, keyframes } from 'styled-components';
-import { maxMobileSize } from '../../Assets/Style';
 
 export const LoginPage = styled.div`
   height: 100vh;
@@ -74,7 +73,6 @@ export const LoginContainerBg = styled.div`
   background-color: #3e2a5e;
     height: 100vh;
     width: 100%;
-    max-width: ${maxMobileSize};
     position: fixed;
     top: 0;
     left: 0;

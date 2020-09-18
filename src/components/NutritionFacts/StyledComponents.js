@@ -1,5 +1,5 @@
 import styled, { keyframes } from 'styled-components';
-import { zdepth1, SmallButton, fadeInAnim, maxMobileSize } from '../../Assets/Style';
+import { zdepth1, SmallButton, fadeInAnim } from '../../Assets/Style';
 
 export const NutritionAnim = keyframes`
   from {
@@ -16,7 +16,6 @@ export const Nutrition = styled.div`
   top: 0;
   left: 0;
   width: 100vw;
-  max-width: ${maxMobileSize};
   height: 100vh;
   display: flex;
   justify-content: center;
@@ -30,7 +29,6 @@ export const Nutrition = styled.div`
     top: 0;
     left: 0;
     width: 100vw;
-    max-width: ${maxMobileSize};
     height: 100vh;
     background-color: black;
     opacity: 0.7;

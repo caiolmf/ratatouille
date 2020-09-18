@@ -1,5 +1,5 @@
 import styled, { keyframes, css } from 'styled-components';
-import { maxMobileSize, zdepth1, zdepth2 } from '../../Assets/Style';
+import { zdepth1, zdepth2 } from '../../Assets/Style';
 
 export const HeaderContainer = styled.div`
   box-sizing: border-box;
@@ -9,7 +9,6 @@ export const HeaderContainer = styled.div`
   background-color: #f6f6f6;
   padding: 0 25px;
   position: fixed;
-  max-width: ${maxMobileSize};
   width: 100%;
   top: 0;
   left: 0;

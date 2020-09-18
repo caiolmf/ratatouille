@@ -1,7 +1,7 @@
-import { max } from 'lodash';
 import styled, { css, keyframes } from 'styled-components';
+import phoneFrame from './phone-frame.png';
 
-export const maxMobileSize = '415px';
+export const topPadding = '70px';
 
 /** Drop Shadows */
 export const zdepth1 = css`
@@ -29,12 +29,33 @@ export const zdepth5 = css`
     0 9px 46px 8px rgba(0 , 0 , 0 , 0.12), 0 11px 15px -7px rgba(0 , 0 , 0 , 0.2);
 `;
 
-export const DesktopContainer = styled.div`
-  max-width: ${maxMobileSize};
-  position: relative;
+export const MainContainer = styled.div`
   padding-top: 70px;
-  padding-bottom: 65px;
+  padding-bottom: 70px;
 `;
+
+// export const DesktopContainer = styled.div`
+//   max-width: ${maxMobileSize};
+//   position: relative;
+//   padding-top: 70px;
+//   padding-bottom: 65px;
+
+//   &::after {
+//     content: '';
+//     background-image: url(${phoneFrame});
+//     position: fixed;
+//       top: 0;
+//       width: 100%;
+//       max-width: 550px;
+//       background-size: cover;
+//       height: 100%;
+//       max-height: 820px;
+//       background-repeat: no-repeat;
+//       background-position-x: right;
+//       background-position-y: top;
+//       z-index: -1;
+//   }
+// `;
 
 export const SectionTitle = styled.h2`
   padding: 10px 20px;

@@ -15,11 +15,11 @@ import ExploreByIngredients from './pages/Explore/ExploreByIngredients';
 import ExploreByArea from './pages/Explore/ExploreByArea';
 import FavoriteRecipes from './pages/FavoriteRecipes';
 import DoneRecipes from './pages/RecipeDone';
-import { DesktopContainer } from './Assets/Style';
+import { MainContainer } from './Assets/Style';
 
 function App() {
   return (
-    <DesktopContainer>
+    <MainContainer>
       <BrowserRouter>
         <Switch>
           <Route exact path="/" component={Login} />
@@ -41,7 +41,7 @@ function App() {
           <Route component={NotFound} />
         </Switch>
       </BrowserRouter>
-    </DesktopContainer>
+    </MainContainer>
   );
 }
 

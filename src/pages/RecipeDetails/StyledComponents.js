@@ -1,6 +1,6 @@
 import styled, { css, keyframes } from 'styled-components';
 import {
-  SmallButton, ClickAnim, zdepth1, zdepth2, fadeInAnim, maxMobileSize,
+  SmallButton, ClickAnim, zdepth1, zdepth2, fadeInAnim,
 } from '../../Assets/Style';
 
 export const Recipe = styled.div`
@@ -30,14 +30,12 @@ export const RecipeImageContainer = styled.div`
   position: fixed;
   top: 0;
   left: 0;
-  max-width: ${maxMobileSize};
   z-index: -1;
   overflow: hidden;
 `;
 
 export const RecipeImage = styled.img`
   width: 100%;
-  max-width: ${maxMobileSize};
   z-index: -2;
   animation: ${recipeImgAmim} 2s ease-out forwards;
 `;
@@ -56,7 +54,6 @@ export const RecipeHeader = styled.div`
           top: 0;
           left: 0;
           width: 100%;
-          max-width: ${maxMobileSize};
           background-color: white;
           padding: 0 20px;
         `
