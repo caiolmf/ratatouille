@@ -18,6 +18,7 @@ import {
   LoginHeader,
   LoginContainerBg,
 } from './StyledComponents';
+import DesktopMode from '../DestopMode';
 
 /**
  * Validate user email using Regex
@@ -92,6 +93,8 @@ const Login = ({ sendUser, history }) => {
   useEffect(() => {
     validateEmail(email) && password.length > 6 ? setDissable(false) : setDissable(true);
   }, [email, password]);
+
+  if (window.screen.width > 480) return <DesktopMode />;
 
   return (
     <LoginPage>

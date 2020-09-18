@@ -1,5 +1,4 @@
 import styled, { css, keyframes } from 'styled-components';
-import phoneFrame from './phone-frame.png';
 
 export const topPadding = '70px';
 
